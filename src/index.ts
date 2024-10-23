@@ -3,6 +3,7 @@ import { ConfigService } from "./services/config/config.service";
 import { LoggerService } from "./services/logger/logger.service";
 import dotenv from "dotenv";
 import { DatabaseService } from "./services/db/db.service";
+import router from "./controllers";
 
 const logger = new LoggerService("Bootstrap");
 
@@ -25,6 +26,8 @@ const bootstrap = async () => {
     await db.$connect();
 
     logger.info("Database connected.");
+
+    app.use("api/v1", router);
 
     app.listen(PORT, () => {
       logger.info("API started.");

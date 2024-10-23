@@ -1,4 +1,5 @@
 import {
+  TOrderCreateManyProps,
   TOrderCreateProps,
   TOrderDeleteProps,
   TOrderFindByProps,
@@ -9,6 +10,7 @@ import {
 
 export interface IOrderService {
   create<T extends TOrderCreateProps>(props: T): Promise<TOrderReturnType<T>>;
+  createMany<T extends TOrderCreateManyProps>(props: T): Promise<void>;
   findBy<T extends TOrderFindByProps>(
     props: T
   ): Promise<TOrderReturnType<T> | null>;

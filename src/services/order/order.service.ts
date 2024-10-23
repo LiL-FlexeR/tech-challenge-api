@@ -1,6 +1,7 @@
 import { DatabaseService } from "../db/db.service";
 import { IOrderService } from "./order.interface";
 import {
+  TOrderCreateManyProps,
   TOrderCreateProps,
   TOrderDeleteProps,
   TOrderFindByProps,
@@ -18,6 +19,10 @@ export class OrderService implements IOrderService {
     const order = await this.db.order.create(props);
 
     return order as TOrderReturnType<T>;
+  }
+
+  async createMany<T extends TOrderCreateManyProps>(props: T): Promise<void> {
+    await this.db.order.createMany(props);
   }
 
   async findBy<T extends TOrderFindByProps>(

@@ -1,0 +1,65 @@
+import { CreateOrderDto } from "@app/dtos/order.dto";
+import validateDto from "@app/middlewares/dto-validation.middleware";
+import { ClientService } from "@app/services/client/client.service";
+import { OrderService } from "@app/services/order/order.service";
+import { Request, Response, Router } from "express";
+
+const ordersRouter = Router();
+
+const orderService = new OrderService();
+const clientService = new ClientService();
+
+ordersRouter.post(
+  "/orders",
+  validateDto(CreateOrderDto),
+  async (req: Request<unknown, unknown, CreateOrderDto>, res: Response) => {
+    const dto = req.body;
+
+    let client = await clientService.findBy({
+      where: {
+        name: dto.userName,
+      },
+      select: {
+        name: true,
+      },
+    });
+
+    if (!client) {
+      client = await clientService.create({
+        data: {
+          name: dto.userName,
+        },
+        select: {
+          name: true,
+        },
+      });
+    }
+
+    await orderService.createMany({
+      data: dto.orderNames.map((n) => ({
+        name: n,
+        clientName: client.name,
+      })),
+    });
+
+    res.status(201);
+  }
+);
+
+ordersRouter.get("/orders", async (_req: Request, res: Response) => {
+  const clients = clientService.findMany({
+    select: {
+      name: true,
+      orders: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+    },
+  });
+
+  res.json(clients);
+});
+
+export default ordersRouter;

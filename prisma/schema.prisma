@@ -8,14 +8,13 @@ datasource db {
 }
 
 model Client {
-  id     String  @unique @default(uuid()) @db.Uuid
-  name   String  @db.VarChar(100)
+  name   String  @unique @db.VarChar(100)
   orders Order[]
 }
 
 model Order {
-  id       String @unique @default(uuid()) @db.Uuid
-  name     String @db.VarChar(150)
-  client   Client @relation(fields: [clientId], references: [id])
-  clientId String @db.Uuid
+  id         String @unique @default(uuid()) @db.Uuid
+  name       String @db.VarChar(150)
+  client     Client @relation(fields: [clientName], references: [name])
+  clientName String @db.VarChar(100)
 }
