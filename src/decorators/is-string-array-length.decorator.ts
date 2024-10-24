@@ -9,14 +9,14 @@ export function IsStringArrayLength(
   max: number,
   validationOptions?: ValidationOptions
 ) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       name: "isStringArrayLength",
       target: object.constructor,
       propertyName,
       options: validationOptions,
       validator: {
-        validate(value: any, _args: ValidationArguments) {
+        validate(value: unknown) {
           if (!Array.isArray(value)) {
             return false;
           }

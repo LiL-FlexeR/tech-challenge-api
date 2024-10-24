@@ -1,7 +1,9 @@
-import { CreateOrderDto } from "@app/dtos/order.dto";
-import { LoggerService } from "@app/services/logger/logger.service";
 import { validateOrReject, ValidationError } from "class-validator";
 import { NextFunction, Request, Response } from "express";
+
+import { CreateOrderDto } from "@app/dtos/order.dto";
+
+import { LoggerService } from "@app/services/logger/logger.service";
 
 const logger = new LoggerService("Dto validation");
 
@@ -21,7 +23,7 @@ export const validateClientOrdersMiddleware = async (
     });
 
     next();
-  } catch (err: any) {
+  } catch (err: unknown) {
     logger.error(`Error occurred while validating dto\n${err}`);
 
     let message: string;

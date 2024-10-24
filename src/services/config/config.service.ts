@@ -1,4 +1,5 @@
 import { EnvVariableNotFoundError } from "@app/errors/config/env-var-not-found.error";
+
 import { IConfigService } from "./config.interface";
 
 export class ConfigService implements IConfigService {

@@ -1,10 +1,12 @@
-import express, { json } from "express";
-import { ConfigService } from "./services/config/config.service";
-import { LoggerService } from "./services/logger/logger.service";
-import dotenv from "dotenv";
-import { DatabaseService } from "./services/db/db.service";
-import router from "./controllers";
 import cors from "cors";
+import dotenv from "dotenv";
+import express, { json } from "express";
+
+import router from "./controllers";
+import { ConfigService } from "./services/config/config.service";
+import { DatabaseService } from "./services/db/db.service";
+import { LoggerService } from "./services/logger/logger.service";
+
 
 const logger = new LoggerService("Bootstrap");
 
