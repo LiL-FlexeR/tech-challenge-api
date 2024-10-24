@@ -49,7 +49,7 @@ ordersRouter.post(
 );
 
 ordersRouter.get("/orders", async (_req: Request, res: Response) => {
-  const clients = clientService.findMany({
+  const clients = await clientService.findMany({
     select: {
       name: true,
       orders: {
