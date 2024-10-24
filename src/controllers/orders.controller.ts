@@ -1,5 +1,5 @@
 import { CreateOrderDto } from "@app/dtos/order.dto";
-import validateDto from "@app/middlewares/dto-validation.middleware";
+import { validateClientOrdersMiddleware } from "@app/middlewares/orders/validate-create-client-orders.middleware";
 import { ClientService } from "@app/services/client/client.service";
 import { OrderService } from "@app/services/order/order.service";
 import { Request, Response, Router } from "express";
@@ -11,7 +11,7 @@ const clientService = new ClientService();
 
 ordersRouter.post(
   "/orders",
-  validateDto(CreateOrderDto),
+  validateClientOrdersMiddleware,
   async (req: Request<unknown, unknown, CreateOrderDto>, res: Response) => {
     const dto = req.body;
 
@@ -43,6 +43,8 @@ ordersRouter.post(
     });
 
     res.status(201);
+
+    res.end();
   }
 );
 

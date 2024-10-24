@@ -4,23 +4,22 @@ import {
   ValidationArguments,
 } from "class-validator";
 
-export const IsStringArrayLength = (
+export function IsStringArrayLength(
   min: number,
   max: number,
   validationOptions?: ValidationOptions
-) => {
+) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       name: "isStringArrayLength",
       target: object.constructor,
-      propertyName: propertyName,
+      propertyName,
       options: validationOptions,
       validator: {
-        validate(value: any, args: ValidationArguments) {
+        validate(value: any, _args: ValidationArguments) {
           if (!Array.isArray(value)) {
             return false;
           }
-
           return value.every(
             (item) =>
               typeof item === "string" &&
@@ -29,9 +28,9 @@ export const IsStringArrayLength = (
           );
         },
         defaultMessage(args: ValidationArguments) {
-          return `All elements in ${args.property} must be strings with a length between ${min} and ${max}`;
+          return `All elements in ${args.property} must be strings with a length between ${min} and ${max}.`;
         },
       },
     });
   };
-};
+}

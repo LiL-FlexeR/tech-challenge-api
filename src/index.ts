@@ -1,9 +1,10 @@
-import express from "express";
+import express, { json } from "express";
 import { ConfigService } from "./services/config/config.service";
 import { LoggerService } from "./services/logger/logger.service";
 import dotenv from "dotenv";
 import { DatabaseService } from "./services/db/db.service";
 import router from "./controllers";
+import cors from "cors";
 
 const logger = new LoggerService("Bootstrap");
 
@@ -12,6 +13,10 @@ const bootstrap = async () => {
 
   try {
     const app = express();
+
+    app.use(cors());
+
+    app.use(json());
 
     const cfgService = new ConfigService();
 
@@ -27,7 +32,7 @@ const bootstrap = async () => {
 
     logger.info("Database connected.");
 
-    app.use("api/v1", router);
+    app.use("/api/v1", router);
 
     app.listen(PORT, () => {
       logger.info("API started.");
