@@ -19,11 +19,26 @@ Tech Challenge is an API-based project built with Express.js, utilizing validati
    `npm ci`
 
 3. Configure env
-4. Build API
+   `
+   PORT=""
+
+   // Example postgresql://root:root@localhost:5433/tech_challenge_db
+   DATABASE_URL="postgresql://{user}:{pass}@localhost:{port}/{db}"
+
+   POSTGRES_USER=""
+   POSTGRES_PASSWORD=""
+   POSTGRES_DB=""
+   `
+
+4. Setup prisma
+
+`npx prisma migrate dev --name init`
+
+5. Build API
 
    `npm run build`
 
-5. Run API
+6. Run API
 
    `npm run start:prod`
 
